@@ -1,11 +1,44 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import SensorData
-from .forms import SensorDataForm
 from django.contrib.auth.decorators import login_required
+import csv
+
+from django import forms
+from .forms import CSVUploadForm, SensorDataForm
 
 @login_required
 def secure_page(request):
     return render(request, 'secure.html')
+
+@login_required
+def upload_csv_view(request):
+    if request.method == 'POST':
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['file']
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
+            for row in reader:
+                SensorData.objects.create(
+                    location=row['location'],
+                    measurement_date=row['measurement_date'],
+                    measurement_time=row['measurement_time'],
+                    temperature=row['temperature'],
+                    sensor_name=row['sensor_name'],
+                    sensor_model=row['sensor_model'],
+                    sensor_group=row['sensor_group'],
+                    pressure=row['pressure'],
+                    co2_level=row['co2_level'],
+                )
+            return redirect('upload-csv-success')
+    else:
+        form = CSVUploadForm()
+    return render(request, 'upload_csv.html', {'form': form})
+
+@login_required
+def upload_csv_success_view(request):
+    return render(request, 'upload_csv_success.html')
+
 
 def sensor_list(request):
     sensors = SensorData.objects.all()

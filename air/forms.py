@@ -8,6 +8,9 @@ class CustomAuthenticationForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
 
+class CSVUploadForm(forms.Form):
+    file = forms.FileField()
+    
 class SensorDataForm(forms.ModelForm):
     class Meta:
         model = SensorData

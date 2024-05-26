@@ -1,0 +1,5 @@
+location,measurement_date,measurement_time,temperature,sensor_name,sensor_model,sensor_group,pressure,co2_level
+Office,2024-05-26,08:00:00,25.5,Sensor1,ModelX,Group1,1013.25,400
+Office,2024-05-26,08:15:00,25.6,Sensor1,ModelX,Group1,1013.15,405
+Lab,2024-05-26,08:00:00,23.4,Sensor2,ModelY,Group2,1013.50,390
+Lab,2024-05-26,08:15:00,23.6,Sensor2,ModelY,Group2,1013.75,395

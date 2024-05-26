@@ -25,6 +25,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('air.api_urls')),
     path('airMonitor/', include("air.urls")),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('allauth.socialaccount.urls')),
